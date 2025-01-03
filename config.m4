@@ -32,9 +32,15 @@ if test "$PHP_SIMDUTF" != "no"; then
   dnl Disable exceptions because PHP is written in C and loads this C++ module, handle errors manually.
   dnl Disable development checks of C simdutf library in php debug builds (can manually override)
   PHP_NEW_EXTENSION(simdutf, [
-      php_simdutf.cpp                    \
+      php_simdutf.cpp \
+      src/php_base64.cpp \
+      src/php_validate.cpp \
+      src/php_count.cpp \
+      src/php_convert.cpp \
       src/simdutf.cpp],
-    $ext_shared,, "-std=c++17 -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DSIMDJSON_EXCEPTIONS=0 -DSIMDJSON_DEVELOPMENT_CHECKS=0", cxx)
+    $ext_shared,, "-std=c++17 -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1", cxx)
+
+  PHP_ADD_INCLUDE($ext_srcdir/src)
 
   PHP_INSTALL_HEADERS([ext/simdutf], [php_simdutf.h])
   PHP_ADD_MAKEFILE_FRAGMENT

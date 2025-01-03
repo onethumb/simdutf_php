@@ -11,6 +11,7 @@ function simdutf_binary_to_base64(string $string): string {}
 
 function simdutf_base64_to_binary(string $string): string {}
 
+
 function simdutf_count_utf8(string $string): int {}
 
 function simdutf_count_utf16(string $string): int {}
@@ -18,6 +19,7 @@ function simdutf_count_utf16(string $string): int {}
 function simdutf_count_utf16le(string $string): int {}
 
 function simdutf_count_utf16be(string $string): int {}
+
 
 function simdutf_convert_latin1_to_utf8(string $string): string {}
 
