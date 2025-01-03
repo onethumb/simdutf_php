@@ -1,8 +1,8 @@
-dnl config.m4 for extension simdjson
+dnl config.m4 for extension simdutf
 
-PHP_ARG_ENABLE(simdjson, whether to enable simdjson, [ --enable-simdjson   Enable simdjson])
+PHP_ARG_ENABLE(simdutf, whether to enable simdutf, [ --enable-simdutf   Enable simdutf])
 
-if test "$PHP_SIMDJSON" != "no"; then
+if test "$PHP_SIMDUTF" != "no"; then
 
   PHP_REQUIRE_CXX()
 
@@ -18,7 +18,7 @@ if test "$PHP_SIMDJSON" != "no"; then
   fi
 
   if test "$php_version" -lt "80000"; then
-    AC_MSG_ERROR([You need at least PHP 8.0.0 to be able to use this version of simdjson. PHP $php_version found])
+    AC_MSG_ERROR([You need at least PHP 8.0.0 to be able to use this version of simdutf. PHP $php_version found])
   else
     AC_MSG_RESULT([$php_version, ok])
   fi
@@ -28,19 +28,15 @@ if test "$PHP_SIMDJSON" != "no"; then
   AX_CHECK_COMPILE_FLAG([-fvisibility=hidden],
                         [CXXFLAGS="$CXXFLAGS -fvisibility=hidden"])
 
-  AC_DEFINE(HAVE_SIMDJSON, 1, [whether simdjson is enabled])
+  AC_DEFINE(HAVE_SIMDUTF, 1, [whether simdutf is enabled])
   dnl Disable exceptions because PHP is written in C and loads this C++ module, handle errors manually.
-  dnl Disable development checks of C simdjson library in php debug builds (can manually override)
-  PHP_NEW_EXTENSION(simdjson, [
-      php_simdjson.cpp                    \
-      src/simdjson_decoder.cpp            \
-      src/countlut.cpp                    \
-      src/simdjson_encoder.cpp            \
-      src/simdutf.cpp                     \
-      src/simdjson.cpp],
+  dnl Disable development checks of C simdutf library in php debug builds (can manually override)
+  PHP_NEW_EXTENSION(simdutf, [
+      php_simdutf.cpp                    \
+      src/simdutf.cpp],
     $ext_shared,, "-std=c++17 -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DSIMDJSON_EXCEPTIONS=0 -DSIMDJSON_DEVELOPMENT_CHECKS=0", cxx)
 
-  PHP_INSTALL_HEADERS([ext/simdjson], [php_simdjson.h src/simdjson_decoder_defs.h])
+  PHP_INSTALL_HEADERS([ext/simdutf], [php_simdutf.h])
   PHP_ADD_MAKEFILE_FRAGMENT
   PHP_ADD_BUILD_DIR(src, 1)
 fi
