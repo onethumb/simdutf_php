@@ -127,3 +127,29 @@ PHP_FUNCTION(simdutf_convert_latin1_to_utf32)
     efree(utf32_output);
 }
 /* }}} */
+
+/* {{{ proto string simdutf_convert_latin1_to_utf16(string input)
+   Convert Latin1 string to UTF-16 using native endianness */
+PHP_FUNCTION(simdutf_convert_latin1_to_utf16)
+{
+    char *input;
+    size_t input_len;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_STRING(input, input_len)
+    ZEND_PARSE_PARAMETERS_END();
+
+    // Allocate output buffer - each input byte becomes one UTF-16 code unit
+    char16_t *output = (char16_t *)safe_emalloc(input_len, sizeof(char16_t), 1);
+
+    size_t result_len = simdutf::convert_latin1_to_utf16(input, input_len, output);
+
+    if (result_len == 0) {
+        efree(output);
+        RETURN_FALSE;
+    }
+
+    RETVAL_STRINGL((char *)output, result_len * sizeof(char16_t));
+    efree(output);
+}
+/* }}} */

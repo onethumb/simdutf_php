@@ -496,3 +496,14 @@ simdutf_warn_unused size_t convert_valid_utf16le_to_utf32(
  */
 simdutf_warn_unused size_t convert_valid_utf16be_to_utf32(
     const char16_t *input, size_t length, char32_t *utf32_buffer) noexcept;
+
+/**
+ * Using native endianness, convert a Latin1 string into a UTF-16 string.
+ *
+ * @param input         the UTF-8 string to convert
+ * @param length        the length of the string in bytes
+ * @param utf16_buffer  the pointer to buffer that can hold conversion result
+ * @return the number of written char16_t.
+ */
+simdutf_warn_unused size_t convert_latin1_to_utf16(
+    const char *input, size_t length, char16_t *utf16_output) noexcept;

@@ -7,6 +7,7 @@ BEGIN_EXTERN_C()
 
 PHP_FUNCTION(simdutf_binary_to_base64);
 PHP_FUNCTION(simdutf_base64_to_binary);
+PHP_FUNCTION(simdutf_base64_to_binary_safe);
 
 END_EXTERN_C()
 

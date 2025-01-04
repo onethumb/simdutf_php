@@ -38,7 +38,12 @@ if test "$PHP_SIMDUTF" != "no"; then
       src/php_count.cpp \
       src/php_convert_latin1.cpp \
       src/php_convert_utf8.cpp \
+      src/php_convert_utf16.cpp \
+      src/php_convert_utf32.cpp \
       src/php_length.cpp \
+      src/php_endianness.cpp \
+      src/php_trim.cpp \
+      src/php_encoding.cpp \
       src/simdutf.cpp],
     $ext_shared,, "-std=c++17 -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1", cxx)
 

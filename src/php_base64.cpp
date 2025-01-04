@@ -92,3 +92,89 @@ PHP_FUNCTION(simdutf_base64_to_binary) {
 
     RETURN_STR(result);
 }
+
+PHP_FUNCTION(simdutf_base64_to_binary_safe) {
+    zend_string *input_str = NULL;
+    zend_long max_output_length = 0;
+
+    ZEND_PARSE_PARAMETERS_START(2, 2)
+        Z_PARAM_STR(input_str)
+        Z_PARAM_LONG(max_output_length)
+    ZEND_PARSE_PARAMETERS_END();
+
+    // Validate max output length
+    if (max_output_length < 0) {
+        zend_throw_exception(NULL, "Maximum output length cannot be negative", 0);
+        RETURN_THROWS();
+    }
+
+    // For base64, every 4 chars encode 3 bytes, calculate maximum possible decoded length
+    size_t potential_decoded_length = (ZSTR_LEN(input_str) * 3) / 4;
+
+    // Use the smaller of max_output_length or potential_decoded_length
+    size_t output_buffer_size = (size_t)max_output_length;
+    if (potential_decoded_length < output_buffer_size) {
+        output_buffer_size = potential_decoded_length;
+    }
+
+    // Allocate output buffer with the calculated size
+    zend_string *result = zend_string_alloc(output_buffer_size, 0);
+    if (!result) {
+        zend_throw_exception(NULL, "Failed to allocate memory for output buffer", 0);
+        RETURN_THROWS();
+    }
+
+    // Prepare outlen parameter for simdutf::base64_to_binary_safe
+    size_t actual_output_length = output_buffer_size;
+
+    // Perform the safe base64 decoding
+    simdutf::result decode_result = simdutf::base64_to_binary_safe(
+        ZSTR_VAL(input_str),
+        ZSTR_LEN(input_str),
+        ZSTR_VAL(result),
+        actual_output_length,
+        simdutf::base64_default,
+        simdutf::last_chunk_handling_options::loose
+    );
+
+    // Handle potential errors
+    if (decode_result.error) {
+        zend_string_free(result);
+
+        switch (decode_result.error) {
+            case simdutf::error_code::INVALID_BASE64_CHARACTER:
+                {
+                    char error_message[128];
+                    snprintf(error_message, sizeof(error_message),
+                            "Invalid base64 character at position %zu", decode_result.count);
+                    zend_throw_exception(NULL, error_message, 0);
+                }
+                break;
+
+            case simdutf::error_code::BASE64_INPUT_REMAINDER:
+                zend_throw_exception(NULL, "Invalid base64 input length", 0);
+                break;
+
+            case simdutf::error_code::OUTPUT_BUFFER_TOO_SMALL:
+                {
+                    char error_message[128];
+                    snprintf(error_message, sizeof(error_message),
+                            "Output buffer too small. Required size: %zu", decode_result.count);
+                    zend_throw_exception(NULL, error_message, 0);
+                }
+                break;
+
+            default:
+                zend_throw_exception(NULL, "Base64 decoding failed", 0);
+        }
+
+        RETURN_THROWS();
+    }
+
+    // Resize the result string to match the actual number of bytes written
+    if (actual_output_length < output_buffer_size) {
+        result = zend_string_truncate(result, actual_output_length, 0);
+    }
+
+    RETURN_STR(result);
+}

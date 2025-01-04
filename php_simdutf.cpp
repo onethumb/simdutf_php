@@ -32,6 +32,13 @@ PHP_MINFO_FUNCTION(simdutf)
 /* Module initialization */
 PHP_MINIT_FUNCTION(simdutf)
 {
+ // Register encoding type constants
+    REGISTER_LONG_CONSTANT("SIMDUTF_ENC_UTF8", simdutf::encoding_type::UTF8, CONST_CS | CONST_PERSISTENT);
+    REGISTER_LONG_CONSTANT("SIMDUTF_ENC_UTF16_LE", simdutf::encoding_type::UTF16_LE, CONST_CS | CONST_PERSISTENT);
+    REGISTER_LONG_CONSTANT("SIMDUTF_ENC_UTF16_BE", simdutf::encoding_type::UTF16_BE, CONST_CS | CONST_PERSISTENT);
+    REGISTER_LONG_CONSTANT("SIMDUTF_ENC_UTF32_LE", simdutf::encoding_type::UTF32_LE, CONST_CS | CONST_PERSISTENT);
+    REGISTER_LONG_CONSTANT("SIMDUTF_ENC_UTF32_BE", simdutf::encoding_type::UTF32_BE, CONST_CS | CONST_PERSISTENT);
+
     return SUCCESS;
 }
 

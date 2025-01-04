@@ -58,8 +58,13 @@ ZEND_TSRMLS_CACHE_EXTERN()
 #include "src/php_validate.h"
 #include "src/php_convert_latin1.h"
 #include "src/php_convert_utf8.h"
+#include "src/php_convert_utf16.h"
+#include "src/php_convert_utf32.h"
 #include "src/php_count.h"
 #include "src/php_length.h"
+#include "src/php_trim.h"
+#include "src/php_endianness.h"
+#include "src/php_encoding.h"
 
 END_EXTERN_C()
 
