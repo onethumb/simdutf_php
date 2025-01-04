@@ -31,7 +31,6 @@ modules/
 *.lo
 *.dep
 php_test_results_*.txt
-tests/*
 !tests/**/*.phpt
 !tests/_files/
 *~
