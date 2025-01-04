@@ -36,7 +36,8 @@ if test "$PHP_SIMDUTF" != "no"; then
       src/php_base64.cpp \
       src/php_validate.cpp \
       src/php_count.cpp \
-      src/php_convert.cpp \
+      src/php_convert_latin1.cpp \
+       src/php_convert_utf8.cpp \
       src/simdutf.cpp],
     $ext_shared,, "-std=c++17 -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1", cxx)
 

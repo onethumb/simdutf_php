@@ -56,7 +56,8 @@ ZEND_TSRMLS_CACHE_EXTERN()
 /* Include component headers */
 #include "src/php_base64.h"
 #include "src/php_validate.h"
-#include "src/php_convert.h"
+#include "src/php_convert_latin1.h"
+#include "src/php_convert_utf8.h"
 #include "src/php_count.h"
 
 END_EXTERN_C()

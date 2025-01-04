@@ -1,5 +1,5 @@
-#ifndef PHP_SIMDUTF_BASE64_H
-#define PHP_SIMDUTF_BASE64_H
+#ifndef PHP_SIMDUTF_COUNT_H
+#define PHP_SIMDUTF_COUNT_H
 
 #include "../php_simdutf.h"
 

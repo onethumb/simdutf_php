@@ -1,20 +1,21 @@
-#ifndef PHP_SIMDUTF_BASE64_H
-#define PHP_SIMDUTF_BASE64_H
+#ifndef PHP_SIMDUTF_CONVERT_UTF8_H
+#define PHP_SIMDUTF_CONVERT_UTF8_H
 
 #include "../php_simdutf.h"
 
 BEGIN_EXTERN_C()
 
-PHP_FUNCTION(simdutf_convert_utf8_to_latin1);
 PHP_FUNCTION(simdutf_convert_utf8_to_utf16);
 PHP_FUNCTION(simdutf_convert_utf8_to_utf16le);
 PHP_FUNCTION(simdutf_convert_utf8_to_utf16be);
 PHP_FUNCTION(simdutf_convert_utf8_to_utf32);
+
 PHP_FUNCTION(simdutf_convert_utf8_to_latin1_with_errors);
 PHP_FUNCTION(simdutf_convert_utf8_to_utf16_with_errors);
 PHP_FUNCTION(simdutf_convert_utf8_to_utf16le_with_errors);
 PHP_FUNCTION(simdutf_convert_utf8_to_utf16be_with_errors);
 PHP_FUNCTION(simdutf_convert_utf8_to_utf32_with_errors);
+
 PHP_FUNCTION(simdutf_convert_valid_utf8_to_latin1);
 PHP_FUNCTION(simdutf_convert_valid_utf8_to_utf16);
 PHP_FUNCTION(simdutf_convert_valid_utf8_to_utf16le);
