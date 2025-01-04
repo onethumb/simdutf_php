@@ -6,79 +6,248 @@ extern "C" {
 #include "src/simdutf.h"
 #include "php_validate.h"
 
-PHP_FUNCTION(simdutf_validate_utf8) {
+PHP_FUNCTION(simdutf_validate_utf8)
+{
     zend_string *string = NULL;
 
     ZEND_PARSE_PARAMETERS_START(1, 1)
         Z_PARAM_STR(string)
     ZEND_PARSE_PARAMETERS_END();
 
-    if (ZSTR_LEN(string) == 0) {
-        GC_ADD_FLAGS(string, IS_STR_VALID_UTF8);
-        RETURN_TRUE;
-    }
+    bool is_valid = simdutf::validate_utf8(ZSTR_VAL(string), ZSTR_LEN(string));
 
-    if (UNEXPECTED(ZSTR_VAL(string)[0] == '\0')) {
-        RETURN_FALSE;
-    }
-
-    if (ZSTR_IS_VALID_UTF8(string)) {
-        RETURN_TRUE;
-    }
-
-    if (UNEXPECTED(ZSTR_VAL(string) == NULL)) {
-        zend_throw_exception(NULL, "Invalid string pointer", 0);
-        RETURN_THROWS();
-    }
-
-    bool is_ok = simdutf::validate_utf8(ZSTR_VAL(string), ZSTR_LEN(string));
-
-    if (EXPECTED(is_ok)) {
+    if (is_valid) {
         GC_ADD_FLAGS(string, IS_STR_VALID_UTF8);
     }
 
-    RETURN_BOOL(is_ok);
+    RETURN_BOOL(is_valid);
 }
 
-
-PHP_FUNCTION(simdutf_validate_utf8_with_errors) {
+PHP_FUNCTION(simdutf_validate_utf8_with_errors)
+{
     zend_string *string = NULL;
 
     ZEND_PARSE_PARAMETERS_START(1, 1)
         Z_PARAM_STR(string)
     ZEND_PARSE_PARAMETERS_END();
 
-    // Handle empty string case
-    if (ZSTR_LEN(string) == 0) {
-        GC_ADD_FLAGS(string, IS_STR_VALID_UTF8);
-        RETURN_TRUE;
-    }
+    simdutf::result result = simdutf::validate_utf8_with_errors(ZSTR_VAL(string), ZSTR_LEN(string));
 
-    // If string was already successfully validated, just return true
-    if (ZSTR_IS_VALID_UTF8(string)) {
-        RETURN_TRUE;
+    array_init(return_value);
+    add_assoc_bool(return_value, "valid", !result.error);
+    add_assoc_long(return_value, "count", result.count);
+    if (result.error) {
+        add_assoc_string(return_value, "error", "Invalid UTF-8 sequence");
     }
+}
 
-    // Validate input pointer
-    if (UNEXPECTED(ZSTR_VAL(string) == NULL)) {
-        zend_throw_exception(NULL, "Invalid string pointer", 0);
+PHP_FUNCTION(simdutf_validate_ascii)
+{
+    zend_string *string = NULL;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_STR(string)
+    ZEND_PARSE_PARAMETERS_END();
+
+    RETURN_BOOL(simdutf::validate_ascii(ZSTR_VAL(string), ZSTR_LEN(string)));
+}
+
+PHP_FUNCTION(simdutf_validate_ascii_with_errors)
+{
+    zend_string *string = NULL;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_STR(string)
+    ZEND_PARSE_PARAMETERS_END();
+
+    simdutf::result result = simdutf::validate_ascii_with_errors(ZSTR_VAL(string), ZSTR_LEN(string));
+
+    array_init(return_value);
+    add_assoc_bool(return_value, "valid", !result.error);
+    add_assoc_long(return_value, "count", result.count);
+    if (result.error) {
+        add_assoc_string(return_value, "error", "Non-ASCII character found");
+    }
+}
+
+PHP_FUNCTION(simdutf_validate_utf16)
+{
+    zend_string *string = NULL;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_STR(string)
+    ZEND_PARSE_PARAMETERS_END();
+
+    if (ZSTR_LEN(string) % 2 != 0) {
+        zend_throw_exception(NULL, "UTF-16 string length must be even", 0);
         RETURN_THROWS();
     }
 
-    simdutf::result validation_result = simdutf::validate_utf8_with_errors(
-        ZSTR_VAL(string),
-        ZSTR_LEN(string)
+    RETURN_BOOL(simdutf::validate_utf16(
+        reinterpret_cast<const char16_t *>(ZSTR_VAL(string)),
+        ZSTR_LEN(string) / 2
+    ));
+}
+
+PHP_FUNCTION(simdutf_validate_utf16le)
+{
+    zend_string *string = NULL;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_STR(string)
+    ZEND_PARSE_PARAMETERS_END();
+
+    if (ZSTR_LEN(string) % 2 != 0) {
+        zend_throw_exception(NULL, "UTF-16LE string length must be even", 0);
+        RETURN_THROWS();
+    }
+
+    RETURN_BOOL(simdutf::validate_utf16le(
+        reinterpret_cast<const char16_t *>(ZSTR_VAL(string)),
+        ZSTR_LEN(string) / 2
+    ));
+}
+
+PHP_FUNCTION(simdutf_validate_utf16be)
+{
+    zend_string *string = NULL;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_STR(string)
+    ZEND_PARSE_PARAMETERS_END();
+
+    if (ZSTR_LEN(string) % 2 != 0) {
+        zend_throw_exception(NULL, "UTF-16BE string length must be even", 0);
+        RETURN_THROWS();
+    }
+
+    RETURN_BOOL(simdutf::validate_utf16be(
+        reinterpret_cast<const char16_t *>(ZSTR_VAL(string)),
+        ZSTR_LEN(string) / 2
+    ));
+}
+
+PHP_FUNCTION(simdutf_validate_utf16_with_errors)
+{
+    zend_string *string = NULL;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_STR(string)
+    ZEND_PARSE_PARAMETERS_END();
+
+    if (ZSTR_LEN(string) % 2 != 0) {
+        zend_throw_exception(NULL, "UTF-16 string length must be even", 0);
+        RETURN_THROWS();
+    }
+
+    simdutf::result result = simdutf::validate_utf16_with_errors(
+        reinterpret_cast<const char16_t *>(ZSTR_VAL(string)),
+        ZSTR_LEN(string) / 2
     );
 
-    if (!validation_result.error) {
-        GC_ADD_FLAGS(string, IS_STR_VALID_UTF8);
-        RETURN_TRUE;
-    } else {
-        // Create an associative array with error details
-        array_init(return_value);
-        add_assoc_bool(return_value, "valid", false);
-        add_assoc_long(return_value, "error_offset", validation_result.count);
-        return;
+    array_init(return_value);
+    add_assoc_bool(return_value, "valid", !result.error);
+    add_assoc_long(return_value, "count", result.count);
+    if (result.error) {
+        add_assoc_string(return_value, "error", "Invalid UTF-16 sequence");
     }
 }
 
+PHP_FUNCTION(simdutf_validate_utf16le_with_errors)
+{
+    zend_string *string = NULL;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_STR(string)
+    ZEND_PARSE_PARAMETERS_END();
+
+    if (ZSTR_LEN(string) % 2 != 0) {
+        zend_throw_exception(NULL, "UTF-16LE string length must be even", 0);
+        RETURN_THROWS();
+    }
+
+    simdutf::result result = simdutf::validate_utf16le_with_errors(
+        reinterpret_cast<const char16_t *>(ZSTR_VAL(string)),
+        ZSTR_LEN(string) / 2
+    );
+
+    array_init(return_value);
+    add_assoc_bool(return_value, "valid", !result.error);
+    add_assoc_long(return_value, "count", result.count);
+    if (result.error) {
+        add_assoc_string(return_value, "error", "Invalid UTF-16LE sequence");
+    }
+}
+
+PHP_FUNCTION(simdutf_validate_utf16be_with_errors)
+{
+    zend_string *string = NULL;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_STR(string)
+    ZEND_PARSE_PARAMETERS_END();
+
+    if (ZSTR_LEN(string) % 2 != 0) {
+        zend_throw_exception(NULL, "UTF-16BE string length must be even", 0);
+        RETURN_THROWS();
+    }
+
+    simdutf::result result = simdutf::validate_utf16be_with_errors(
+        reinterpret_cast<const char16_t *>(ZSTR_VAL(string)),
+        ZSTR_LEN(string) / 2
+    );
+
+    array_init(return_value);
+    add_assoc_bool(return_value, "valid", !result.error);
+    add_assoc_long(return_value, "count", result.count);
+    if (result.error) {
+        add_assoc_string(return_value, "error", "Invalid UTF-16BE sequence");
+    }
+}
+
+PHP_FUNCTION(simdutf_validate_utf32)
+{
+    zend_string *string = NULL;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_STR(string)
+    ZEND_PARSE_PARAMETERS_END();
+
+    if (ZSTR_LEN(string) % 4 != 0) {
+        zend_throw_exception(NULL, "UTF-32 string length must be a multiple of 4", 0);
+        RETURN_THROWS();
+    }
+
+    bool is_valid = simdutf::validate_utf32(
+        reinterpret_cast<const char32_t *>(ZSTR_VAL(string)),
+        ZSTR_LEN(string) / 4
+    );
+
+    RETURN_BOOL(is_valid);
+}
+
+PHP_FUNCTION(simdutf_validate_utf32_with_errors)
+{
+    zend_string *string = NULL;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_STR(string)
+    ZEND_PARSE_PARAMETERS_END();
+
+    if (ZSTR_LEN(string) % 4 != 0) {
+        zend_throw_exception(NULL, "UTF-32 string length must be a multiple of 4", 0);
+        RETURN_THROWS();
+    }
+
+    simdutf::result result = simdutf::validate_utf32_with_errors(
+        reinterpret_cast<const char32_t *>(ZSTR_VAL(string)),
+        ZSTR_LEN(string) / 4
+    );
+
+    array_init(return_value);
+    add_assoc_bool(return_value, "valid", !result.error);
+    add_assoc_long(return_value, "count", result.count);
+    if (result.error) {
+        add_assoc_string(return_value, "error", "Invalid UTF-32 sequence");
+    }
+}

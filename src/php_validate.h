@@ -6,7 +6,18 @@
 BEGIN_EXTERN_C()
 
 PHP_FUNCTION(simdutf_validate_utf8);
+PHP_FUNCTION(simdutf_validate_ascii);
+PHP_FUNCTION(simdutf_validate_utf16);
+PHP_FUNCTION(simdutf_validate_utf16le);
+PHP_FUNCTION(simdutf_validate_utf16be);
+PHP_FUNCTION(simdutf_validate_utf32);
+
 PHP_FUNCTION(simdutf_validate_utf8_with_errors);
+PHP_FUNCTION(simdutf_validate_ascii_with_errors);
+PHP_FUNCTION(simdutf_validate_utf16_with_errors);
+PHP_FUNCTION(simdutf_validate_utf16le_with_errors);
+PHP_FUNCTION(simdutf_validate_utf16be_with_errors);
+PHP_FUNCTION(simdutf_validate_utf32_with_errors);
 
 END_EXTERN_C()
 

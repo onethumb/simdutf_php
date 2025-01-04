@@ -59,6 +59,7 @@ ZEND_TSRMLS_CACHE_EXTERN()
 #include "src/php_convert_latin1.h"
 #include "src/php_convert_utf8.h"
 #include "src/php_count.h"
+#include "src/php_length.h"
 
 END_EXTERN_C()
 

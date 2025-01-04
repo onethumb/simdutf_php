@@ -1,11 +1,31 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 5b642a4ce4d7493e6257ef9dc12faa8d9b3646f1 */
+ * Stub hash: e8bae997d6177dac57a3a298b12a3efb1786d8fb */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_simdutf_validate_utf8, 0, 1, _IS_BOOL, 0)
 	ZEND_ARG_TYPE_INFO(0, string, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
+#define arginfo_simdutf_validate_ascii arginfo_simdutf_validate_utf8
+
+#define arginfo_simdutf_validate_utf16 arginfo_simdutf_validate_utf8
+
+#define arginfo_simdutf_validate_utf16le arginfo_simdutf_validate_utf8
+
+#define arginfo_simdutf_validate_utf16be arginfo_simdutf_validate_utf8
+
+#define arginfo_simdutf_validate_utf32 arginfo_simdutf_validate_utf8
+
 #define arginfo_simdutf_validate_utf8_with_errors arginfo_simdutf_validate_utf8
+
+#define arginfo_simdutf_validate_ascii_with_errors arginfo_simdutf_validate_utf8
+
+#define arginfo_simdutf_validate_utf16_with_errors arginfo_simdutf_validate_utf8
+
+#define arginfo_simdutf_validate_utf16le_with_errors arginfo_simdutf_validate_utf8
+
+#define arginfo_simdutf_validate_utf16be_with_errors arginfo_simdutf_validate_utf8
+
+#define arginfo_simdutf_validate_utf32_with_errors arginfo_simdutf_validate_utf8
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_simdutf_binary_to_base64, 0, 1, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO(0, string, IS_STRING, 0)
@@ -61,9 +81,49 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_simdutf_convert_valid_utf8_to_utf32 arginfo_simdutf_binary_to_base64
 
+#define arginfo_simdutf_utf8_length_from_utf16 arginfo_simdutf_count_utf8
+
+#define arginfo_simdutf_utf8_length_from_utf16le arginfo_simdutf_count_utf8
+
+#define arginfo_simdutf_utf8_length_from_utf16be arginfo_simdutf_count_utf8
+
+#define arginfo_simdutf_utf8_length_from_utf32 arginfo_simdutf_count_utf8
+
+#define arginfo_simdutf_utf8_length_from_latin1 arginfo_simdutf_count_utf8
+
+#define arginfo_simdutf_latin1_length_from_utf8 arginfo_simdutf_count_utf8
+
+#define arginfo_simdutf_latin1_length_from_utf16 arginfo_simdutf_count_utf8
+
+#define arginfo_simdutf_latin1_length_from_utf32 arginfo_simdutf_count_utf8
+
+#define arginfo_simdutf_utf16_length_from_utf8 arginfo_simdutf_count_utf8
+
+#define arginfo_simdutf_utf16_length_from_utf32 arginfo_simdutf_count_utf8
+
+#define arginfo_simdutf_utf16_length_from_latin1 arginfo_simdutf_count_utf8
+
+#define arginfo_simdutf_utf32_length_from_utf8 arginfo_simdutf_count_utf8
+
+#define arginfo_simdutf_utf32_length_from_utf16 arginfo_simdutf_count_utf8
+
+#define arginfo_simdutf_utf32_length_from_utf16le arginfo_simdutf_count_utf8
+
+#define arginfo_simdutf_utf32_length_from_utf16be arginfo_simdutf_count_utf8
+
 
 ZEND_FUNCTION(simdutf_validate_utf8);
+ZEND_FUNCTION(simdutf_validate_ascii);
+ZEND_FUNCTION(simdutf_validate_utf16);
+ZEND_FUNCTION(simdutf_validate_utf16le);
+ZEND_FUNCTION(simdutf_validate_utf16be);
+ZEND_FUNCTION(simdutf_validate_utf32);
 ZEND_FUNCTION(simdutf_validate_utf8_with_errors);
+ZEND_FUNCTION(simdutf_validate_ascii_with_errors);
+ZEND_FUNCTION(simdutf_validate_utf16_with_errors);
+ZEND_FUNCTION(simdutf_validate_utf16le_with_errors);
+ZEND_FUNCTION(simdutf_validate_utf16be_with_errors);
+ZEND_FUNCTION(simdutf_validate_utf32_with_errors);
 ZEND_FUNCTION(simdutf_binary_to_base64);
 ZEND_FUNCTION(simdutf_base64_to_binary);
 ZEND_FUNCTION(simdutf_count_utf8);
@@ -89,11 +149,36 @@ ZEND_FUNCTION(simdutf_convert_valid_utf8_to_utf16);
 ZEND_FUNCTION(simdutf_convert_valid_utf8_to_utf16le);
 ZEND_FUNCTION(simdutf_convert_valid_utf8_to_utf16be);
 ZEND_FUNCTION(simdutf_convert_valid_utf8_to_utf32);
+ZEND_FUNCTION(simdutf_utf8_length_from_utf16);
+ZEND_FUNCTION(simdutf_utf8_length_from_utf16le);
+ZEND_FUNCTION(simdutf_utf8_length_from_utf16be);
+ZEND_FUNCTION(simdutf_utf8_length_from_utf32);
+ZEND_FUNCTION(simdutf_utf8_length_from_latin1);
+ZEND_FUNCTION(simdutf_latin1_length_from_utf8);
+ZEND_FUNCTION(simdutf_latin1_length_from_utf16);
+ZEND_FUNCTION(simdutf_latin1_length_from_utf32);
+ZEND_FUNCTION(simdutf_utf16_length_from_utf8);
+ZEND_FUNCTION(simdutf_utf16_length_from_utf32);
+ZEND_FUNCTION(simdutf_utf16_length_from_latin1);
+ZEND_FUNCTION(simdutf_utf32_length_from_utf8);
+ZEND_FUNCTION(simdutf_utf32_length_from_utf16);
+ZEND_FUNCTION(simdutf_utf32_length_from_utf16le);
+ZEND_FUNCTION(simdutf_utf32_length_from_utf16be);
 
 
 static const zend_function_entry ext_functions[] = {
 	ZEND_FE(simdutf_validate_utf8, arginfo_simdutf_validate_utf8)
+	ZEND_FE(simdutf_validate_ascii, arginfo_simdutf_validate_ascii)
+	ZEND_FE(simdutf_validate_utf16, arginfo_simdutf_validate_utf16)
+	ZEND_FE(simdutf_validate_utf16le, arginfo_simdutf_validate_utf16le)
+	ZEND_FE(simdutf_validate_utf16be, arginfo_simdutf_validate_utf16be)
+	ZEND_FE(simdutf_validate_utf32, arginfo_simdutf_validate_utf32)
 	ZEND_FE(simdutf_validate_utf8_with_errors, arginfo_simdutf_validate_utf8_with_errors)
+	ZEND_FE(simdutf_validate_ascii_with_errors, arginfo_simdutf_validate_ascii_with_errors)
+	ZEND_FE(simdutf_validate_utf16_with_errors, arginfo_simdutf_validate_utf16_with_errors)
+	ZEND_FE(simdutf_validate_utf16le_with_errors, arginfo_simdutf_validate_utf16le_with_errors)
+	ZEND_FE(simdutf_validate_utf16be_with_errors, arginfo_simdutf_validate_utf16be_with_errors)
+	ZEND_FE(simdutf_validate_utf32_with_errors, arginfo_simdutf_validate_utf32_with_errors)
 	ZEND_FE(simdutf_binary_to_base64, arginfo_simdutf_binary_to_base64)
 	ZEND_FE(simdutf_base64_to_binary, arginfo_simdutf_base64_to_binary)
 	ZEND_FE(simdutf_count_utf8, arginfo_simdutf_count_utf8)
@@ -119,5 +204,20 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(simdutf_convert_valid_utf8_to_utf16le, arginfo_simdutf_convert_valid_utf8_to_utf16le)
 	ZEND_FE(simdutf_convert_valid_utf8_to_utf16be, arginfo_simdutf_convert_valid_utf8_to_utf16be)
 	ZEND_FE(simdutf_convert_valid_utf8_to_utf32, arginfo_simdutf_convert_valid_utf8_to_utf32)
+	ZEND_FE(simdutf_utf8_length_from_utf16, arginfo_simdutf_utf8_length_from_utf16)
+	ZEND_FE(simdutf_utf8_length_from_utf16le, arginfo_simdutf_utf8_length_from_utf16le)
+	ZEND_FE(simdutf_utf8_length_from_utf16be, arginfo_simdutf_utf8_length_from_utf16be)
+	ZEND_FE(simdutf_utf8_length_from_utf32, arginfo_simdutf_utf8_length_from_utf32)
+	ZEND_FE(simdutf_utf8_length_from_latin1, arginfo_simdutf_utf8_length_from_latin1)
+	ZEND_FE(simdutf_latin1_length_from_utf8, arginfo_simdutf_latin1_length_from_utf8)
+	ZEND_FE(simdutf_latin1_length_from_utf16, arginfo_simdutf_latin1_length_from_utf16)
+	ZEND_FE(simdutf_latin1_length_from_utf32, arginfo_simdutf_latin1_length_from_utf32)
+	ZEND_FE(simdutf_utf16_length_from_utf8, arginfo_simdutf_utf16_length_from_utf8)
+	ZEND_FE(simdutf_utf16_length_from_utf32, arginfo_simdutf_utf16_length_from_utf32)
+	ZEND_FE(simdutf_utf16_length_from_latin1, arginfo_simdutf_utf16_length_from_latin1)
+	ZEND_FE(simdutf_utf32_length_from_utf8, arginfo_simdutf_utf32_length_from_utf8)
+	ZEND_FE(simdutf_utf32_length_from_utf16, arginfo_simdutf_utf32_length_from_utf16)
+	ZEND_FE(simdutf_utf32_length_from_utf16le, arginfo_simdutf_utf32_length_from_utf16le)
+	ZEND_FE(simdutf_utf32_length_from_utf16be, arginfo_simdutf_utf32_length_from_utf16be)
 	ZEND_FE_END
 };
