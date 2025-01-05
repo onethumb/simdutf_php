@@ -24,8 +24,15 @@ PHP_RINIT_FUNCTION(simdutf)
 
 PHP_MINFO_FUNCTION(simdutf)
 {
+    const simdutf::implementation *impl = simdutf::get_active_implementation();
+
     php_info_print_table_start();
     php_info_print_table_row(2, "simdutf support", "enabled");
+    php_info_print_table_row(2, "simdutf extension version", PHP_SIMDUTF_VERSION);
+    php_info_print_table_row(2, "simdutf extension support", PHP_SIMDUTF_SUPPORT_URL);
+    php_info_print_table_row(2, "simdutf library version", SIMDUTF_VERSION);
+    php_info_print_table_row(2, "simdutf implementation name", impl->name().c_str());
+    php_info_print_table_row(2, "simdutf implementation description", impl->description().c_str());
     php_info_print_table_end();
 }
 
@@ -33,11 +40,12 @@ PHP_MINFO_FUNCTION(simdutf)
 PHP_MINIT_FUNCTION(simdutf)
 {
  // Register encoding type constants
-    REGISTER_LONG_CONSTANT("SIMDUTF_ENC_UTF8", simdutf::encoding_type::UTF8, CONST_CS | CONST_PERSISTENT);
-    REGISTER_LONG_CONSTANT("SIMDUTF_ENC_UTF16_LE", simdutf::encoding_type::UTF16_LE, CONST_CS | CONST_PERSISTENT);
-    REGISTER_LONG_CONSTANT("SIMDUTF_ENC_UTF16_BE", simdutf::encoding_type::UTF16_BE, CONST_CS | CONST_PERSISTENT);
-    REGISTER_LONG_CONSTANT("SIMDUTF_ENC_UTF32_LE", simdutf::encoding_type::UTF32_LE, CONST_CS | CONST_PERSISTENT);
-    REGISTER_LONG_CONSTANT("SIMDUTF_ENC_UTF32_BE", simdutf::encoding_type::UTF32_BE, CONST_CS | CONST_PERSISTENT);
+    REGISTER_LONG_CONSTANT("SIMDUTF_ENCODING_UNSPECIFIED", PHP_SIMDUTF_ENCODING_UNSPECIFIED, CONST_CS | CONST_PERSISTENT);
+    REGISTER_LONG_CONSTANT("SIMDUTF_ENCODING_UTF8", PHP_SIMDUTF_ENCODING_UTF8, CONST_CS | CONST_PERSISTENT);
+    REGISTER_LONG_CONSTANT("SIMDUTF_ENCODING_UTF16_LE", PHP_SIMDUTF_ENCODING_UTF16_LE, CONST_CS | CONST_PERSISTENT);
+    REGISTER_LONG_CONSTANT("SIMDUTF_ENCODING_UTF16_BE", PHP_SIMDUTF_ENCODING_UTF16_BE, CONST_CS | CONST_PERSISTENT);
+    REGISTER_LONG_CONSTANT("SIMDUTF_ENCODING_UTF32_LE", PHP_SIMDUTF_ENCODING_UTF32_LE, CONST_CS | CONST_PERSISTENT);
+    REGISTER_LONG_CONSTANT("SIMDUTF_ENCODING_UTF32_BE", PHP_SIMDUTF_ENCODING_UTF32_BE, CONST_CS | CONST_PERSISTENT);
 
     return SUCCESS;
 }

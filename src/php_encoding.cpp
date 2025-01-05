@@ -20,13 +20,11 @@ PHP_FUNCTION(simdutf_autodetect_encoding)
     ZEND_PARSE_PARAMETERS_END();
 
     if (input_len == 0) {
-        RETURN_LONG(0); // Return 0 for empty input
+        RETURN_LONG(0); // Maps to unspecified
     }
 
-    simdutf::encoding_type result = simdutf::autodetect_encoding(input, input_len);
-
-    // Convert the encoding type to an integer that PHP can use
-    RETURN_LONG((zend_long)result);
+    // Return the raw enum value - it matches the intended constants
+    RETURN_LONG((zend_long)simdutf::autodetect_encoding(input, input_len));
 }
 /* }}} */
 

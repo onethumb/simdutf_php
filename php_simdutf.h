@@ -29,7 +29,14 @@ extern zend_module_entry simdutf_module_entry;
 
 #define PHP_SIMDUTF_VERSION                  "1.0.0dev"
 #define PHP_SIMDUTF_VERSION_ID               10000
-#define SIMDUTF_SUPPORT_URL                  "https://github.com/awesomized/simdutf_php"
+#define PHP_SIMDUTF_SUPPORT_URL              "https://github.com/awesomized/simdutf_php"
+
+#define PHP_SIMDUTF_ENCODING_UNSPECIFIED 0
+#define PHP_SIMDUTF_ENCODING_UTF8        1
+#define PHP_SIMDUTF_ENCODING_UTF16_LE    2
+#define PHP_SIMDUTF_ENCODING_UTF16_BE    4
+#define PHP_SIMDUTF_ENCODING_UTF32_LE    8
+#define PHP_SIMDUTF_ENCODING_UTF32_BE    16
 
 /* API visibility */
 #ifdef PHP_WIN32
